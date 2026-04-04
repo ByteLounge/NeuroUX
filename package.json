@@ -1,0 +1,17 @@
+{
+  "name": "neuroux",
+  "version": "1.0.0",
+  "description": "Cognitive Load & Human Attention Intelligence Engine",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"cd backend && venv\\Scripts\\python.exe -m uvicorn main:app --reload --port 8000\" \"cd frontend && npm run dev\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

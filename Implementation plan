@@ -1,0 +1,114 @@
+# NeuroUX — Cognitive Load & Human Attention Intelligence Engine
+
+This document outlines the architecture, technology stack, and phased execution plan for building the NeuroUX platform. The goal is to build an industry-grade product and research-worthy system that analyzes UI screenshots to predict human visual attention, cognitive load, and UX metrics.
+
+## Proposed Architecture
+
+### 1. Project Folder Structure
+
+A clean, enterprise-grade mono-repo structure will be established:
+
+```text
+NeuroUX/
+├── frontend/          # React, Vite, Tailwind CSS (Modern SaaS UI)
+├── backend/           # FastAPI (REST API, orchestrator)
+├── ml_engine/         # Python, OpenCV, PyTorch (Saliency, Cognitive Load generation)
+├── database/          # SQLite initially (scalable to PostgreSQL), SQLAlchemy ORM
+├── reports/           # Generated PDF reports and heatmaps
+├── requirements.txt   # Python dependencies
+└── README.md          # Comprehensive project documentation
+```
+
+### 2. Frontend (React + Vite + Tailwind CSS)
+
+The frontend will be built to visually wow users, resembling a premium B2B SaaS product.
+*   **Frameworks:** React 18, Vite for optimal build speeds.
+*   **Styling:** Tailwind CSS with a custom, high-contrast, modern color palette (Dark mode tailored, glassmorphism elements, vibrant accents).
+*   **State Management:** React Context API or Zustand.
+*   **Key Components:**
+    *   **Dashboard:** High-level metrics, historical analysis list.
+    *   **Upload Zone:** Drag-and-drop animated dropzone.
+    *   **Analysis View:** Split screen / overlay view showing original UI vs. Heatmaps (Saliency, Cognitive Load) using custom transparency sliders.
+    *   **Comparison Mode:** Side-by-side A/B testing of two UI versions.
+    *   **Metrics Cards:** Animated gauges and charts for custom metrics (CFI, VCS, IFS, DDP, UX Intelligence).
+
+### 3. Backend (FastAPI)
+
+FastAPI will serve as the performant backend brain, handling concurrent requests and linking the frontend to the ML engine.
+*   **Framework:** FastAPI (Python 3.10+)
+*   **Database ORM:** SQLAlchemy (SQLite for development portability, configurable for PostgreSQL)
+*   **Endpoints:**
+    *   `POST /api/v1/analyze`: Upload screenshot, triggers ML pipeline, returns scores and heatmap URLs.
+    *   `POST /api/v1/compare`: Upload A & B screenshots, returns comparative analysis.
+    *   `GET /api/v1/history`: Retrieve past analysis sessions.
+    *   `GET /api/v1/export/{session_id}`: Generate and download a PDF report.
+
+### 4. ML / AI Engine (PyTorch + OpenCV)
+
+The core intelligent engine responsible for simulating human vision and measuring cognitive load.
+*   **Attention Prediction:** Utilizing OpenCV's saliency detection (e.g., Spectral Residual or Fine-Grained) combined with feature extraction to generate high-quality visual heatmaps.
+*   **UI Element Detection:** Edge detection and contour analysis to locate text blocks, buttons, and high-density image zones.
+*   **Custom Metrics Engine:**
+    *   *Cognitive Friction Index (CFI):* Calculated through edge density, text-to-image ratio, and contrast analysis.
+    *   *Visual Competition Score (VCS):* Measured by the number and distance between peak saliency spots.
+    *   *Interaction Fatigue Score (IFS):* Derived from the structural complexity and interactive element count.
+    *   *Decision Delay Probability (DDP):* Statistical probability based on visual clutter and element grouping.
+    *   *UX Intelligence Score:* A weighted harmonic mean of the above metrics mapped to a 0-100 scale.
+*   **Recommendation Engine:** Heuristic-based logic engine that maps detected metric anomalies (e.g., High CFI in a specific quadrant) to human-readable UX suggestions.
+
+### 5. Report Generation
+
+*   **Tooling:** FPDF or ReportLab in Python.
+*   **Content:** Auto-generates a branded PDF containing the original UI, overlaid heatmaps, detailed metric breakdowns, and actionable recommendations.
+
+---
+
+## Phased Execution Strategy
+
+*   **Phase 1: Project Setup & Folder Structure**
+    *   Initialize main repository.
+    *   Create `frontend`, `backend`, `ml_engine`, `database`, `reports` folders.
+    *   Set up base configurations (`requirements.txt`, basic `README.md`).
+
+*   **Phase 2: Backend Foundation**
+    *   Initialize FastAPI app.
+    *   Configure SQLite database and SQLAlchemy models.
+    *   Create base API routes for file uploading and database CRUD operations.
+
+*   **Phase 3: ML Engine Core Development**
+    *   Implement OpenCV/PyTorch image processing pipeline.
+    *   Develop the Saliency/Attention heatmap generator.
+    *   Write algorithms for the 5 Custom Metrics (CFI, VCS, IFS, DDP, UX Intelligence Score).
+    *   Develop the textual recommendation engine.
+
+*   **Phase 4: Backend & ML Integration**
+    *   Wire FastAPI endpoints to trigger the ML Engine.
+    *   Implement logic to save generated heatmaps and scores to the database.
+    *   Implement PDF report generation.
+
+*   **Phase 5: Frontend Layout & UI Architecture**
+    *   Initialize Vite React app with Tailwind CSS.
+    *   Define the premium design system (colors, typography, components).
+    *   Build standard layouts (Sidebar, Header, Dashboard grid).
+
+*   **Phase 6: Frontend Feature Implementation**
+    *   Build drag-and-drop uploader.
+    *   Build the Analysis Results view with the interactive heatmap overlays.
+    *   Build the Comparison View.
+    *   Connect frontend to FastAPI using Axios/Fetch.
+
+*   **Phase 7: Polish, Testing & Finalization**
+    *   Add micro-animations (Framer Motion or CSS transitions).
+    *   Ensure all endpoints handle errors gracefully.
+    *   Finalize AI output explainability tooltips.
+    *   Provide comprehensive setup documentation.
+
+---
+
+> [!IMPORTANT]
+> **User Review Required**
+> 1. Are you satisfied with the proposed phased approach?
+> 2. For the ML Engine, I plan to use advanced OpenCV Saliency mapping paired with analytical algorithms for the custom metrics (to ensure deterministic and highly explainable outputs without requiring massive GPU compute for a student project, though it will be structured to look enterprise-grade). Does this sound good, or do you have a specific PyTorch neural network model in mind for attention prediction?
+> 3. Does the choice of SQLite (as a lightweight robust start, highly typical for easily demonstrable projects) work for you, or do you explicitly need Dockerized PostgreSQL?
+
+Please approve this plan so we can begin Phase 1 immediately!

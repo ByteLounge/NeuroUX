@@ -1,0 +1,28 @@
+# Node
+node_modules/
+dist/
+dist-ssr
+*.local
+
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Databases & Sessions
+database/sessions/
+*.db
+*.sqlite3
+
+# Reports
+reports/*.pdf
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
