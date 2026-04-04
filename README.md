@@ -2,7 +2,9 @@
 
 NeuroUX is a high-fidelity visual intelligence platform that analyzes UI screenshots to predict human visual attention, cognitive load, and UX metrics. Built for designers and researchers, it uses OpenCV-based saliency mapping and custom heuristics to provide actionable, science-backed design recommendations.
 
-![NeuroUX Dashboard](https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3)
+<img width="1915" height="869" alt="Screenshot 2026-04-04 125548" src="https://github.com/user-attachments/assets/acd7e688-ab28-484a-8044-1659e53f1601" />
+
+<img width="1916" height="871" alt="Screenshot 2026-04-04 125615" src="https://github.com/user-attachments/assets/7840d352-d33b-4261-a133-bc73e85ce646" />
 
 ## 🚀 Features
 
