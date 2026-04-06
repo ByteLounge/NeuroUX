@@ -12,7 +12,7 @@ export const AnalysisResult = ({ session, onExport }: AnalysisResultProps) => {
   const [viewMode, setViewMode] = useState<'saliency' | 'original'>('saliency');
   const [opacity, setOpacity] = useState(0.7);
 
-  const API_BASE = "http://localhost:8000";
+  const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000";
 
   const getSeverityStyles = (severity: string) => {
     switch (severity) {
