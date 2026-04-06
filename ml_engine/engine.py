@@ -78,14 +78,40 @@ class NeuroUXEngine:
 
     def _generate_recommendations(self, metrics):
         recs = []
-        if metrics["cfi_score"] > 60:
-            recs.append({"text": "High visual complexity detected. Consider increasing whitespace.", "severity": "High"})
+        
+        # Cognitive Friction Index (CFI)
+        if metrics["cfi_score"] > 80:
+            recs.append({"text": "Critical visual clutter detected. This layout will significantly slow down user processing. Immediate simplification of edge-heavy elements is required.", "severity": "High"})
+        elif metrics["cfi_score"] > 60:
+            recs.append({"text": "High visual complexity detected. Consider increasing whitespace and reducing the number of borders/lines to decrease cognitive load.", "severity": "Medium"})
+        elif metrics["cfi_score"] < 30:
+             recs.append({"text": "Excellent visual clarity. The low edge density allows for fast scanning and minimal cognitive friction.", "severity": "Success"})
+
+        # Visual Competition Score (VCS)
         if metrics["vcs_score"] > 70:
-            recs.append({"text": "Too many competing focal points. Use size or color to establish a clear hierarchy.", "severity": "Medium"})
-        if metrics["ifs_score"] > 50:
-            recs.append({"text": "Interaction density is high. This may cause fatigue; simplify UI elements.", "severity": "Medium"})
+            recs.append({"text": "Too many competing focal points. Use size, color, or weight to establish a clear visual hierarchy and guide the user's eye to the primary CTA.", "severity": "High"})
+        elif metrics["vcs_score"] > 40:
+            recs.append({"text": "Multiple areas are competing for attention. Consider dimming secondary elements to highlight the main interaction point.", "severity": "Medium"})
+        
+        # Interaction Fatigue Score (IFS)
+        if metrics["ifs_score"] > 75:
+            recs.append({"text": "Severe structural complexity. This UI is likely to cause rapid interaction fatigue. Simplify complex components into smaller, more digestible units.", "severity": "High"})
+        elif metrics["ifs_score"] > 50:
+            recs.append({"text": "Interaction density is high. This may cause fatigue over time; simplify UI elements or use progressive disclosure.", "severity": "Medium"})
+
+        # Decision Delay Probability (DDP)
+        if metrics["ddp_score"] > 70:
+            recs.append({"text": "High probability of decision paralysis. The combination of clutter and competing signals makes it difficult for users to choose the next action.", "severity": "High"})
+        elif metrics["ddp_score"] > 50:
+            recs.append({"text": "Potential for delayed user action. Streamline the decision path by removing non-essential information near critical buttons.", "severity": "Medium"})
+
+        # UX Intelligence Score
+        if metrics["ux_intelligence_score"] < 40:
+            recs.append({"text": "Overall UX Intelligence is low. We recommend a full layout audit to prioritize usability and clear navigation paths.", "severity": "High"})
+        elif metrics["ux_intelligence_score"] > 85:
+            recs.append({"text": "Outstanding UI design. The layout balances attention, complexity, and clarity exceptionally well.", "severity": "Success"})
         
         if not recs:
-            recs.append({"text": "Layout follows good visual hierarchy principles.", "severity": "Info"})
+            recs.append({"text": "Layout follows good visual hierarchy principles and is well-balanced.", "severity": "Info"})
             
         return recs

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Layers, Image as ImageIcon, Sparkles, Download } from 'lucide-react';
+import { Layers, Image as ImageIcon, Sparkles, Download, AlertCircle, CheckCircle2, Info } from 'lucide-react';
 import type { AnalysisSession } from '../types';
 
 interface AnalysisResultProps {
@@ -13,6 +13,35 @@ export const AnalysisResult = ({ session, onExport }: AnalysisResultProps) => {
   const [opacity, setOpacity] = useState(0.7);
 
   const API_BASE = "http://localhost:8000";
+
+  const getSeverityStyles = (severity: string) => {
+    switch (severity) {
+      case 'High':
+        return {
+          container: 'bg-red-500/5 border-red-500/20',
+          badge: 'bg-red-500/20 text-red-500',
+          icon: <AlertCircle className="w-3 h-3" />
+        };
+      case 'Medium':
+        return {
+          container: 'bg-amber-500/5 border-amber-500/20',
+          badge: 'bg-amber-500/20 text-amber-500',
+          icon: <AlertCircle className="w-3 h-3" />
+        };
+      case 'Success':
+        return {
+          container: 'bg-emerald-500/5 border-emerald-500/20',
+          badge: 'bg-emerald-500/20 text-emerald-500',
+          icon: <CheckCircle2 className="w-3 h-3" />
+        };
+      default:
+        return {
+          container: 'bg-blue-500/5 border-blue-500/20',
+          badge: 'bg-blue-500/20 text-blue-500',
+          icon: <Info className="w-3 h-3" />
+        };
+    }
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -88,22 +117,26 @@ export const AnalysisResult = ({ session, onExport }: AnalysisResultProps) => {
             AI Recommendations
           </h3>
           <div className="space-y-4">
-            {session.recommendations.map((rec, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className={`p-4 rounded-2xl border ${rec.severity === 'High' ? 'bg-red-500/5 border-red-500/20' : 'bg-amber-500/5 border-amber-500/20'}`}
-              >
-                <div className="flex items-center space-x-2 mb-2">
-                  <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full ${rec.severity === 'High' ? 'bg-red-500/20 text-red-500' : 'bg-amber-500/20 text-amber-500'}`}>
-                    {rec.severity} Severity
-                  </span>
-                </div>
-                <p className="text-sm text-gray-300 leading-relaxed">{rec.text}</p>
-              </motion.div>
-            ))}
+            {session.recommendations.map((rec, i) => {
+              const styles = getSeverityStyles(rec.severity);
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className={`p-4 rounded-2xl border ${styles.container}`}
+                >
+                  <div className="flex items-center space-x-2 mb-2">
+                    <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full flex items-center gap-1 ${styles.badge}`}>
+                      {styles.icon}
+                      {rec.severity} Priority
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-300 leading-relaxed">{rec.text}</p>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>
